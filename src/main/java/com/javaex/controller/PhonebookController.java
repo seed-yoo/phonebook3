@@ -43,7 +43,7 @@ public class PhonebookController extends HttpServlet {
 			String name = request.getParameter("name");
 			String hp = request.getParameter("hp");
 			String company = request.getParameter("company");
-
+			
 			// vo로 묶기
 			PersonVo personVo = new PersonVo(name, hp, company);
 			System.out.println(personVo.toString());
@@ -55,11 +55,7 @@ public class PhonebookController extends HttpServlet {
 			phoneDao.personInsert(personVo);
 			
 			
-			response.sendRedirect("http://localhost:8080/phonebook3/pbc?action=list");
-			
-			
-			
-			
+			response.sendRedirect("/phonebook3/pbc?action=list");
 			
 			
 			/*
@@ -91,7 +87,36 @@ public class PhonebookController extends HttpServlet {
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/list.jsp");
 			rd.forward(request, response);
+			
+		}else if ("delete".equals(action)) {
+			System.out.println("delete:삭제");
+			
+			int no = Integer.parseInt(request.getParameter("no")) ;
+			System.out.println(no);
+			
+			
+			
+			// db관련 업무
+			PhoneDao phoneDao = new PhoneDao();
+			
+			// 삭제
+			phoneDao.personDelete(no);
+			
+			response.sendRedirect("/phonebook3/pbc?action=list");
+			
+			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

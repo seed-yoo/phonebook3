@@ -37,6 +37,14 @@ System.out.println(personList);
 			<td>회사(company)</td>
 			<td><%= personList.get(i).getCompany() %></td>
 		</tr>
+		<tr>
+			<td><%= personList.get(i).getPersonId() %>
+				<a href="/phonebook3/pbc?action=delete&no=<%= personList.get(i).getPersonId() %>">[삭제]</a>
+			</td>
+			<td>
+				<a>[수정]</a>
+			</td>
+		</tr>
 	</table>
 
 	<br>
