@@ -19,9 +19,9 @@ public class PhonebookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// 생성자 - 없음
-
+	
 	// 메소드 - getter/setter
-
+	
 	// 메소드 - 일반
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -33,7 +33,7 @@ public class PhonebookController extends HttpServlet {
 		if ("wform".equals(action)) {
 			System.out.println("wform:등록폼");
 
-			// jsp 한테 html 그리기 응답해라 ==> 포워드
+			// jsp 한테 html 그리기 응답해라 ==> forward
 			RequestDispatcher rd = request.getRequestDispatcher("/writeForm.jsp");
 			rd.forward(request, response);
 
@@ -53,15 +53,42 @@ public class PhonebookController extends HttpServlet {
 
 			// db에 저장
 			phoneDao.personInsert(personVo);
-
+			
+			
+			response.sendRedirect("http://localhost:8080/phonebook3/pbc?action=list");
+			
+			
+			
+			
+			
+			
+			/*
 			// db에서 전체 데이터 가져오기
 			List<PersonVo> personList = phoneDao.personSelect();
 //			System.out.println(personList);
 			
+			// request에 담기
 			request.setAttribute("personList", personList);
 			
-			// 포워드
+			// forward
 			// jsp 한테 html 그리기 응답해라 ==> 포워드
+			RequestDispatcher rd = request.getRequestDispatcher("/list.jsp");
+			rd.forward(request, response);
+			*/
+			
+		}else if("list".equals(action)){
+			System.out.println("list:리스트");
+			
+			// db사용
+			PhoneDao phoneDao= new PhoneDao();
+			
+			// 리스트 가져오기
+			List<PersonVo> personList = phoneDao.personSelect();
+//			System.out.println(personList);
+			
+			// 데이터담기	forward
+			request.setAttribute("personList", personList);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/list.jsp");
 			rd.forward(request, response);
 		}
