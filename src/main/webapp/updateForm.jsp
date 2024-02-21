@@ -41,7 +41,7 @@ System.out.println(no);
 	<form action="/phonebook3/pbc" method="get">
 		
 		<div>
-			<label>번호(personId)</label> <input type="text" name="no" value="<%= id %>">
+			<input type="hidden" name="no" value="<%= id %>">
 		</div>
 		<div>
 			<label>이름(name)</label> <input type="text" name="name" value="<%= name %>">
@@ -55,13 +55,13 @@ System.out.println(no);
 			<label>회사(company)</label> <input type="text" name="company" value="<%= company %>">
 		</div>
 
-		<input type="text" name="action" value="update"> <br>
+		<input type="hidden" name="action" value="modify"> <br>
 		<button type="submit">수정</button>
 	</form>
 
 	<br>
 	<br>
-	<a href="">리스트페이지로 이동</a>
+	<a href="/phonebook3/pbc?action=list">리스트페이지로 이동</a>
 
 </body>
 </html>

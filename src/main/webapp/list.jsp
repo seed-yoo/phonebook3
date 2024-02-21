@@ -41,7 +41,7 @@ List<PersonVo> personList = (List<PersonVo>) request.getAttribute("personList");
 				href="/phonebook3/pbc?action=delete&no=<%=personList.get(i).getPersonId()%>">[삭제]</a>
 			</td>
 			<td><%=personList.get(i).getPersonId()%> 
-			<a href="/phonebook3/pbc?action=uform&no=<%=personList.get(i).getPersonId()%>&name=<%=personList.get(i).getName()%>&hp=<%=personList.get(i).getHp()%>&company=<%=personList.get(i).getCompany()%>">
+			<a href="/phonebook3/pbc?action=mform&no=<%=personList.get(i).getPersonId()%>&name=<%=personList.get(i).getName()%>&hp=<%=personList.get(i).getHp()%>&company=<%=personList.get(i).getCompany()%>">
 					[수정]</a></td>
 		</tr>
 	</table>
@@ -52,7 +52,7 @@ List<PersonVo> personList = (List<PersonVo>) request.getAttribute("personList");
 	%>
 
 	<br>
-	<a href="">추가번호 등록</a>
+	<a href="/phonebook3/pbc?action=wform">추가번호 등록</a>
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.PhoneDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.PersonVo;
 
 @WebServlet("/pbc")
@@ -32,10 +34,9 @@ public class PhonebookController extends HttpServlet {
 
 		if ("wform".equals(action)) {
 			System.out.println("wform:등록폼");
-
-			// jsp 한테 html 그리기 응답해라 ==> forward
-			RequestDispatcher rd = request.getRequestDispatcher("/writeForm.jsp");
-			rd.forward(request, response);
+			
+			WebUtil.forward(request, response, "/writeForm.jsp");
+			WebUtil.redirect(request, response, "/phonebook3/pbc?action=list");
 
 		} else if ("insert".equals(action)) {
 			System.out.println("insert:등록");
@@ -54,7 +55,8 @@ public class PhonebookController extends HttpServlet {
 			// db에 저장
 			phoneDao.personInsert(personVo);
 
-			response.sendRedirect("/phonebook3/pbc?action=list");
+			
+			WebUtil.redirect(request, response, "/phonebook3/pbc?action=list");
 
 			/*
 			 * // db에서 전체 데이터 가져오기 List<PersonVo> personList = phoneDao.personSelect(); //
@@ -65,22 +67,6 @@ public class PhonebookController extends HttpServlet {
 			 * // forward // jsp 한테 html 그리기 응답해라 ==> 포워드 RequestDispatcher rd =
 			 * request.getRequestDispatcher("/list.jsp"); rd.forward(request, response);
 			 */
-
-		} else if ("list".equals(action)) {
-			System.out.println("list:리스트");
-
-			// db사용
-			PhoneDao phoneDao = new PhoneDao();
-
-			// 리스트 가져오기
-			List<PersonVo> personList = phoneDao.personSelect();
-//			System.out.println(personList);
-
-			// 데이터담기 forward
-			request.setAttribute("personList", personList);
-
-			RequestDispatcher rd = request.getRequestDispatcher("/list.jsp");
-			rd.forward(request, response);
 
 		} else if ("delete".equals(action)) {
 			System.out.println("delete:삭제");
@@ -93,11 +79,14 @@ public class PhonebookController extends HttpServlet {
 
 			// 삭제
 			phoneDao.personDelete(no);
-
-			response.sendRedirect("/phonebook3/pbc?action=list");
-
-		} else if ("uform".equals(action)) {
-			System.out.println("uform:수정폼");
+			/*
+			 * response.sendRedirect("/phonebook3/pbc?action=list");
+			 */
+			
+			WebUtil.redirect(request, response, "/phonebook3/pbc?action=list");
+			
+		} else if ("mform".equals(action)) {
+			System.out.println("mform:수정폼");
 			int no = Integer.parseInt(request.getParameter("no"));
 			System.out.println(no);
 
@@ -110,13 +99,15 @@ public class PhonebookController extends HttpServlet {
 
 			// 데이터담기 forward
 			request.setAttribute("personList", personList);
-
+/*
 			// jsp 한테 html 그리기 응답해라 ==> forward
 			RequestDispatcher rd = request.getRequestDispatcher("/updateForm.jsp");
 			rd.forward(request, response);
-
-		} else if ("update".equals(action)) {
-			System.out.println("update:등록");
+*/
+			WebUtil.forward(request, response, "/updateForm.jsp");
+			
+		} else if ("modify".equals(action)) {
+			System.out.println("modify:수정");
 
 			int no = Integer.parseInt(request.getParameter("no"));
 			String name = request.getParameter("name");
@@ -132,9 +123,27 @@ public class PhonebookController extends HttpServlet {
 
 			// db에 저장
 			phoneDao.personUpdate(personVo);
-
+/*
 			response.sendRedirect("/phonebook3/pbc?action=list");
+			*/
+			WebUtil.redirect(request, response, "/phonebook3/pbc?action=list");
 
+		} else {
+			System.out.println("list:리스트");
+
+			// db사용
+			PhoneDao phoneDao = new PhoneDao();
+
+			// 리스트 가져오기
+			List<PersonVo> personList = phoneDao.personSelect();
+
+			// 데이터담기 forward
+			request.setAttribute("personList", personList);
+			/*
+			 * RequestDispatcher rd = request.getRequestDispatcher("/list.jsp");
+			 * rd.forward(request, response);
+			 */
+			WebUtil.forward(request, response, "/list.jsp");
 		}
 
 	}
