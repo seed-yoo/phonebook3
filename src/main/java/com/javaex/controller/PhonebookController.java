@@ -35,8 +35,8 @@ public class PhonebookController extends HttpServlet {
 		if ("wform".equals(action)) {
 			System.out.println("wform:등록폼");
 			
-			WebUtil.forward(request, response, "/writeForm.jsp");
-			WebUtil.redirect(request, response, "/phonebook3/pbc?action=list");
+			WebUtil.forward(request, response, "/WEB-INF/writeForm.jsp");
+			//WebUtil.redirect(request, response, "/phonebook3/pbc?action=list");
 
 		} else if ("insert".equals(action)) {
 			System.out.println("insert:등록");
@@ -104,7 +104,7 @@ public class PhonebookController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/updateForm.jsp");
 			rd.forward(request, response);
 */
-			WebUtil.forward(request, response, "/updateForm.jsp");
+			WebUtil.forward(request, response, "/WEB-INF/updateForm.jsp");
 			
 		} else if ("modify".equals(action)) {
 			System.out.println("modify:수정");
@@ -143,7 +143,7 @@ public class PhonebookController extends HttpServlet {
 			 * RequestDispatcher rd = request.getRequestDispatcher("/list.jsp");
 			 * rd.forward(request, response);
 			 */
-			WebUtil.forward(request, response, "/list.jsp");
+			WebUtil.forward(request, response, "/WEB-INF/list.jsp");
 		}
 
 	}
