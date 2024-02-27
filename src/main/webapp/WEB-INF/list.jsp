@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.javaex.vo.PersonVo"%>
-<%
-List<PersonVo> personList = (List<PersonVo>) request.getAttribute("personList");
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,37 +17,31 @@ List<PersonVo> personList = (List<PersonVo>) request.getAttribute("personList");
 	<p>등록된 전화번호 리스트 입니다.</p>
 	<br>
 
-	<%
-	for (int i = 0; i < personList.size(); i++) {
-	%>
-	<table border="1">
-		<tr>
-			<td>이름(name)</td>
-			<td><%=personList.get(i).getName()%></td>
-		</tr>
-		<tr>
-			<td>핸드폰(hp)</td>
-			<td><%=personList.get(i).getHp()%></td>
-		</tr>
-		<tr>
-			<td>회사(company)</td>
-			<td><%=personList.get(i).getCompany()%></td>
-		</tr>
-		<tr>
-			<td><%=personList.get(i).getPersonId()%> <a
-				href="/phonebook3/pbc?action=delete&no=<%=personList.get(i).getPersonId()%>">[삭제]</a>
-			</td>
-			<td><%=personList.get(i).getPersonId()%> 
-			<a href="/phonebook3/pbc?action=mform&no=<%=personList.get(i).getPersonId()%>&name=<%=personList.get(i).getName()%>&hp=<%=personList.get(i).getHp()%>&company=<%=personList.get(i).getCompany()%>">
-					[수정]</a></td>
-		</tr>
-	</table>
-	
-	<br>
-	<%
-	}
-	%>
-
+		<c:forEach items="${ requestScope.personList }" var="personVo" varStatus="status">
+			<table border="1">
+				<tr>
+					<td>이름(name)</td>
+					<td>${ personVo.name }</td>
+				</tr>
+				<tr>
+					<td>핸드폰(hp)</td>
+					<td>${ personVo.hp }</td>
+				</tr>
+				<tr>
+					<td>회사(company)</td>
+					<td>${ personVo.company }</td>
+				</tr>
+				<tr>
+					<td>${ personVo.personId } <a
+						href="/phonebook3/pbc?action=delete&no=${ personVo.personId }">[삭제]</a>
+					</td>
+					<td>${ personVo.personId } 
+					<a href="/phonebook3/pbc?action=mform&no=${ personVo.personId }&name=${ personVo.name }&hp=${ personVo.hp }&company=${ personVo.company }">
+							[수정]</a></td>
+				</tr>
+			</table>
+		
+		</c:forEach>
 	<br>
 	<a href="/phonebook3/pbc?action=wform">추가번호 등록</a>
 
